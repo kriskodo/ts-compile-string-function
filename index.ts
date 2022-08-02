@@ -4,6 +4,9 @@ let main = document.getElementById("app");
 
 if (!main) throw new Error("no container with id: app found.");
 
+const str = "<p> {{firstName}} </p> <p> {{lastName}} </p> <p> {{age}} </p>" as const;
+type TDerivedParamsFromString = Params<typeof str>;
+
 function compilator<T extends TDerivedParamsFromString>(obj: T) {
     const regex = new RegExp("{{([a-zA-Z]+)}}");
 
@@ -19,9 +22,6 @@ function compilator<T extends TDerivedParamsFromString>(obj: T) {
 
     return { compile: compile }
 }
-
-const str = "<p> {{firstName}} </p> <p> {{lastName}} </p> <p> {{age}} </p>" as const;
-type TDerivedParamsFromString = Params<typeof str>;
 
 const inputObj = { firstName: "kris", lastName: "georgiev", age: 21 };
 const c = compilator(inputObj);
